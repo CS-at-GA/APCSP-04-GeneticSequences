@@ -33,4 +33,4 @@ It may or may not be useful to create an account on Project Rosalind. Having an 
 ### _Some_ Ideas for Ways to Expand on This Project. 
 
 <!--- Footnotes Below --->
-[^1] What I am providing is designed to get you through the assigned problems, not prior ones. 
+[^1]: What I am providing is designed to get you through the assigned problems, not prior ones. 
