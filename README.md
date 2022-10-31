@@ -30,10 +30,27 @@ JavaScript [Arrays](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Refe
 
 ## Starter Code Overview
 
+We have developed the starter code in class. Here are the examples:
+
+First Three Problems: [A](https://gist.github.com/gajoswald/23d3188c8553ae86b4c419874b0427fe) | [D](https://gist.github.com/gajoswald/7f1006db8644c9a63aa60f5d9f796deb) | [F](https://gist.github.com/gajoswald/1fc08315f5f3e583f403b278b8755bea) 
+
 ## Assignment 
+
+You will choose one of the following two problems and solve it. 
+
+* [RNA Splicing](https://rosalind.info/problems/splc/)
+* [Open Reading Frames](https://rosalind.info/problems/orf/)
 
 ### Requirements
 
+* You must follow the format given by the Project Rosalind problem. 
+* You must solve for the example code provided in the problem, though you will also be evaluated over the test data that will be provided. 
+* You must produce some sort of visible output in the same space of the input. For instance, if you use this starter code, your solution should produce output in a good format on the canvas[^1]
+
 ### _Some_ Ideas for Ways to Expand on This Project. 
 
+* Both problems? 
+* Additional problems?
+
 <!--- Footnotes --->
+[^1]: If, however, you decided to have your input be console-based, your output could be there as well. 
