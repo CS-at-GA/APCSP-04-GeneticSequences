@@ -47,22 +47,4 @@ function keyPressed() {
   }
 }
 
-function loadProblemData() {
-  if( currentProblem.testData.type === "string" || currentProblem.testData.type === "array") {
-    currentProblem.data = currentProblem.testData.payload;
-    redraw();
-  } else if( currentProblem.testData.type === "file" ) {
-    currentProblem.data = loadStrings( 
-      currentProblem.testData.payload, 
-      () => {
-        if( currentProblem.testData.postLoad ) {
-          currentProblem.testData.postLoad()
-        } else {
-          defaultPostLoadFunction()
-        }
-        redraw()
-      }
-    );
-  }
-}
 
