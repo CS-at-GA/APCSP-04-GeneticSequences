@@ -1,4 +1,4 @@
-# Assignment Title
+# Genetic Strings
 
 In this assignment, we will be exploring [Project Rosalind](https://rosalind.info/). I encourage you to read about it, and to maybe brush up on your genetics, though, strictly speaking, these are CS-based problems focused on string/array manipulation, data structures, and searching/pattern-matching algorithms. As you can see in this [tree view of the problems](https://rosalind.info/problems/tree-view/), there are dependencies built in to subsequent problems. It may be useful to look at those problems (make sure to expand the collapsed part that explains the concepts behind the challenge!).
 
