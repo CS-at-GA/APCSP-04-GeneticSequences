@@ -1,3 +1,6 @@
+const STOP = "X";
+const START_CODON = "AUG";
+const STOP_CODONS = ["UAA","UAG","UGA"];
 const codonTable = {
   UUC: "F",
   UUA: "L",
@@ -9,11 +12,11 @@ const codonTable = {
   UCG: "S",
   UAU: "Y",
   UAC: "Y",
-  UAA: "X",
-  UAG: "X",
+  UAA: STOP,
+  UAG: STOP,
   UGU: "C",
   UGC: "C",
-  UGA: "X",
+  UGA: STOP,
   UGG: "W",
   CUU: "L",
   CUC: "L",
