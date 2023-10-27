@@ -27,9 +27,19 @@ We have developed the starter code in class. Here are the examples:
 
 ## Assignment 
 
+Complete each of these problems. 
+
 * [RNA Splicing](https://rosalind.info/problems/splc/)
 * [Open Reading Frames](https://rosalind.info/problems/orf/)
 * [Finding a Shared Motif](https://rosalind.info/problems/lcsm/)
+
+### Problem Details
+
+Make sure to read each of the problems, including any additional text in the problems. 
+
+#### RNA Splicing
+
+You will actually solve the general case of this problem and the function you are looking for is in `GeneticString.js`: `removeSubstrings`. This function should remove all strings in the `substrings` array (the problem description calls these _introns_) from the DNAString and return the result as a new DNAString. 
 
 ### Requirements
 
