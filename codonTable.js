@@ -1,3 +1,4 @@
+
 const STOP = "X";
 const START_CODON = "AUG";
 const STOP_CODONS = ["UAA","UAG","UGA"];
