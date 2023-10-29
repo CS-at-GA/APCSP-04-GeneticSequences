@@ -1,101 +1,198 @@
-const problems = {
-  "countingDNANucleotides":{
-    testData: {
-      // type:"string",    
-      // payload:"AGCTTTTCATTCTGACTGCAACGGGCAATATGTCTCTGTGTGGATTAAAAAAAGAGTGTCTGATAGCAGC",    
-      type:"file",
-      payload:"rosalind_dna_1_dataset.txt",
+let problems = {
+  splc: {
+    display: {
+      name: "RNA Splicing",
+      key: "r",
+      abbreviation: "SPLC"
     },
-    text: "Counting DNA Nucleotides",
-    f: countingDNANucleotides
-  },
-  'translatingRNAtoProteins':{
-    testData: {
-      // type:"string",
-      // payload:"AUGGCCAUGGCGCCCAGAACUGAGAUCAAUAGUACCCGUAUUAACGGGUGA"
-      type:"file",
-      payload:"rosalind_prot.txt"
+    test: {
+      input: {
+        string: "ATGGTCTACATAGCTGACAAACAGCACGTAGCAATCGGTCGAATCTCGAGAGGCATATGGTCACATGATCGGTCGAGCGTGTTTCAAAGTTTGCGCCTAG",
+        introns: ["ATCGGTCGAA", "ATCGGTCGAGCGTGT"]
+      },
+      expected: "MVYIADKQHVASREAYGHMFKVCA"
     },
-  text: "Translating RNA to Proteins",
-  f: rnaToProtein
-  },
-  'findingAMotif':{
-    testData:{
-      // type:"array",
-      // payload:["GATATATGCATATACTT","ATAT"]
-      type:"file",
-      payload:"rosalind_subs.txt",
-      postLoad: () => {
-        
-      }
-    },
-    text: "Finding a Motif in DNA",
-    f: findMotif,
-    displaySolution: () => {
-      currentProblem.solution = currentProblem.solution.map( loc => loc + 1).join( " " );
+    rosalind: {
+      exepected: "MVTLILLVFRLHSTTCIIEGSCTNLPRTRSSTYTTNNPYAEFEIGAKHKTTTFMGAVVGRIRVQCLSPDAIHKRPKIMMSAPVILPLQYRALNFYTVRSVYNHDYQDPILSSEDSRDKGRFCIASLGEHRQSDKKRMSTSGVIVLSCYSAPMAVISFTRRYEIQSSLSPR"
     }
   },
-  'openReadingFrames':{
-    testData:{
-      type:"string",
-      payload:"AGCCATGTAGCTAACTCAGGTTACATGGGGATGACCCCGCGACTTGGATTAGAGTCTCTTTTGGAATAAGCCTGAATGATCCGAGTAGCATCTCAG",
-      // type:"file",
-      // payload:"rosalind_orf.txt",
-      postLoad: () => {
-        const fasta = postLoadFASTA();
-        currentProblem.data = fasta[0].string
-      }
+  orf: {
+    display: {
+      name: "Open Reading Frames",
+      key: "o",
+      abbreviation: "ORF"
     },
-    text: "Open Reading Frames",
-    f: openReadingFrames,
-    displaySolution: () => {
-      currentProblem.solution = currentProblem.solution.join("\n");
+    test: {
+      input: {
+        string: "AGCCATGTAGCTAACTCAGGTTACATGGGGATGACCCCGCGACTTGGATTAGAGTCTCTTTTGGAATAAGCCTGAATGATCCGAGTAGCATCTCAG"
+      },
+      expected: [
+        "MLLGSFRLIPKETLIQVAGSSPCNLS",
+        "M",
+        "MGMTPRLGLESLLE",
+        "MTPRLGLESLLE"
+      ]
+    },
+    rosalind: {
+      expected: [
+        "MYLRQDETPSVKNSCRDRSHHTLYMCLCASPRQQHILYSIVCEFGQYR",
+        "MCLCASPRQQHILYSIVCEFGQYR",
+        "MLHGLAWGWARLQNLTV",
+        "METVNWKHGRRFVTL",
+        "MGSVPLSYERNS",
+        "MSRDSRAHTHFQ",
+        "MVWPGDGRGCKTSPFKR",
+        "MSGILEGRLVGICLSRSHETRMTVVHLCRGTQEHTPISNDEA",
+        "MTVVHLCRGTQEHTPISNDEA",
+        "M",
+        "MSGHAVTIRHVPPPGRDAFREEFL",
+        "MRVSAATAYIV",
+        "MGAAAKPHRLRGDFFSENGDGQLEARTEVRDSMTHWPFR",
+        "MTHWPFR",
+        "MGHSKEAV",
+        "MKPA",
+        "MTKPNTKRLKLSRLSASTNTGA",
+        "MSPTLYTNPVE",
+        "MR",
+        "MYYSHAGFM",
+        "MLRFVAL",
+        "MSNRRDIRPRCSYWLTAVKASIFWC",
+        "MGVCS",
+        "MRVSCDLLRQMPTSLPSRIPLIAKRYTTHRYQQRRLISHVIQFKQLLLNDPLAFPLASGKANGS",
+        "MPTSLPSRIPLIAKRYTTHRYQQRRLISHVIQFKQLLLNDPLAFPLASGKANGS",
+        "MKHGRGTRNVRDAVCLDLSPFSDGSYQGIGRISLSVLTKFTNYTIQYMLLPRRRA",
+        "MLLPRRRA",
+        "MMAAVSTGILHGRRLVLAEVHA",
+        "MAAVSTGILHGRRLVLAEVHA",
+        "MGHRVTNLRPCFQLTVSILTKEITS",
+        "MDEARET",
+        "MQYA",
+        "MEVIRV"
+      ]
     }
   },
-  'splicing':{
-    testData:{
-      type:"file",
-      payload:"rosalind_splc.txt",
-      postLoad: () => {
-        currentProblem.data = postLoadFASTA();
-      }
+  lcsm: {
+    display: {
+      name: "Finding a Shared Motif",
+      key: "s",
+      abbreviation: "LCSM"
     },
-    text: "Splicing",
-    f: spliceDNA,
+    test: {
+      input: {
+        strings: [
+          "GATTACA",
+          "TAGACCA",
+          "ATACA"
+        ]
+      },
+      expected: "AC"
+    },
+    rosalind: {
+      expected: "CAATGCCCTCTCACGGACCCAGGCGTTACTCTGTATAATCCACTCGCGTTTGGCCTTATCGTCGTACTTGCACATACAGGGCCGAGAAGTCACCACGACTTAAA"
+    }
   }
 }
 
-function loadProblemData() {
-  if( currentProblem.testData.type === "string" || currentProblem.testData.type === "array") {
-    currentProblem.data = currentProblem.testData.payload;
-    redraw();
-  } else if( currentProblem.testData.type === "file" ) {
-    currentProblem.data = loadStrings( 
-      currentProblem.testData.payload, 
-      () => {
-        if( currentProblem.testData.postLoad ) {
-          currentProblem.testData.postLoad()
-        } else {
-          defaultPostLoadFunction()
+// could consolidate if we can figure out string substitution and different data formats
+function loadLCSMData() {
+  return new Promise((resolve, reject) => {
+    if (useLargeDataSets) {
+      loadStrings('rosalindData/assignmentData/rosalind_lcsm.txt', (lines) => {
+        resolve(postLoadFASTA(lines))
+      }, (error) => reject(error))
+    } else {
+      resolve(problems.lcsm.test.input)
+    }
+  })
+}
+
+function loadSPLCData() {
+  return new Promise((resolve, reject) => {
+    if (useLargeDataSets) {
+      loadStrings('rosalindData/assignmentData/rosalind_splc.txt', (lines) => {
+        resolve(postLoadFASTA(lines))
+      }, (error) => reject(error))
+    } else {
+      resolve(problems.splc.test.input)
+    }
+  })
+}
+
+function loadORFData() {
+  return new Promise((resolve, reject) => {
+    if (useLargeDataSets) {
+      loadStrings('rosalindData/assignmentData/rosalind_orf.txt', (lines) => {
+        resolve(postLoadFASTA(lines)[0])
+      }, (error) => reject(error))
+    } else {
+      resolve(problems.orf.test.input)
+    }
+  })
+}
+
+function solveLCSM(input) {
+  new Promise((resolve, reject) => {
+    const expected = problems.lcsm[useLargeDataSets ? "rosalind" : "test"].expected
+    const str = GSUtil.longestCommonSubstring(input.strings)
+    if (str === expected) {
+      resolve({ msg: "Finding a Shared Motif succeeded!", output: str })
+    } else {
+      reject({ msg: `Finding a Shared Motif failed. Was expecting ${expected} but got ${str}`, output: str })
+    }
+  })
+}
+
+function solveSPLC(input) {
+  new Promise((resolve, reject) => {
+    const dna = new DNAString(input.string)
+    const output = dna.removeIntrons(input.introns).transcribeToRNA().toProtein()
+    const expected = new ProteinString(problems.splc[useLargeDataSets ? "rosalind" : "test"].expected)
+    if (output.string === expected.string) {
+      resolve({ msg: "RNA Splicing succeeded!", output })
+    } else {
+      reject({ msg: `RNA Splicing failed. Was expecting ${expected.string} but got ${output.string}`, output })
+    }
+  })
+}
+
+function solveORF(input) {
+  new Promise((resolve, reject) => {
+    const output = (new DNAString(input.string))
+      .candidateProtenStrings()
+      .map(p => p.string)
+      .sort()
+
+    const expected = problems.orf[useLargeDataSets ? "rosalind" : "test"]
+      .expected
+      .sort()
+
+    if (output.length !== expected.length) {
+      reject({ msg: `Open Reading Frames failed. Was expecting ${expected.length} protein strings and got ${output.length}.`, output })
+    } else {
+      for (let i = 0; i < output.length; i++) {
+        if (output[i] !== expected[i]) {
+          reject({ msg: `Open Reading Frames failed. Found the correct number of protein strings, but found string, ${output[i]}, doesn't match ${expected[i]}`, output })
         }
-        redraw()
       }
-    );
-  }
+      resolve({ msg: "Open Reading Frames succeeded!", output })
+    }
+  })
 }
 
-const defaultPostLoadFunction = () => {
-  currentProblem.data = currentProblem.data[0];
-}
-
-const postLoadFASTA = () => {
+const postLoadFASTA = (lines, headers = false) => {
   let fastaStrings = [];
+
+  const update = (current) => {
+    current = { ...current, string: new DNAString(current.string) }
+    fastaStrings.push(headers ? current : current.string)
+  }
+
   let current;
-  for( const line of currentProblem.data ) {
-    if( line.at(0) === ">" ) {
-      if( current ) {
-        fastaStrings.push( current ) 
-      } 
+  for (const line of lines) {
+    if (line.at(0) === ">") {
+      if (current) {
+        update(current)
+      }
       current = {
         name: line.substring(1),
         string: ""
@@ -104,6 +201,6 @@ const postLoadFASTA = () => {
       current.string += line;
     }
   }
-  fastaStrings.push(current)
-  return fastaStrings;
+  update(current) // last one
+  return fastaStrings
 }
