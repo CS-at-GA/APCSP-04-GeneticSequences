@@ -16,7 +16,7 @@ class RNAString extends GeneticString {
   // This function should return an array of all ORFs derived from this RNAString
   openReadingFrames() {
     let orfs = []  
-
+    
     return orfs
   }
 }

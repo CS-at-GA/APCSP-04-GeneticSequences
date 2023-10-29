@@ -51,6 +51,7 @@ class DNAString extends GeneticString {
   // Since removing substrings from a string is a general string problem
   //   this functionality is going to be broadly implemented in the 
   //   GeneticString class. This function simply serves as a wrapper.
+  // Note that the testing framework will handle conversion into ProteinString
   removeIntrons( introns ) {
     return this.removeSubstrings(introns)
   }

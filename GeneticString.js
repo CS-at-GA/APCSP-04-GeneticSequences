@@ -61,7 +61,6 @@ class GeneticString{
   //   GeneticString we are with the altered string. 
   removeSubstrings(substrings) {
     substrings = this.#fromStringsOrGeneticStrings(substrings)
-    console.log( substrings )
     let string = this.string
     // your code goes here
     return new this.constructor(string)

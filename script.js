@@ -1,45 +1,33 @@
-let currentProblem = {};
-let strings
 GeneticString.CHARACTER_SETS = {
   "DNAString": DNAString.NUCLEOTIDES,
   "RNAString": RNAString.NUCLEOTIDES,
   "ProteinString": ProteinString.PROTEINS
 }
 
-function preload() {
-  loadStrings('rosalind_lcsm.txt',postLoadFASTA)
-}
-
+let useLargeDataSets = false 
+let currentProblem
+let dataReady = false
+let results
 
 function setup() {
-  
   createCanvas(windowWidth, windowHeight);
   background(255);
   textWrap(WORD);
   noLoop();
-
-  // let strings = [
-  //   new DNAString("GATTACA"),
-  //   new DNAString("TAGACCA"),
-  //   new DNAString("ATACA")
-  // ]
-  
-  let ans = GSUtil.longestCommonSubstring(currentProblem.data)
-  console.log( ans )
-  
-  // let s = new GeneticSequence("Jason")
-  // console.log( s.characterCounts )
-
 }
 
 function draw() {
   background("white");
-  const x = 10;
-  let y = 10;
-  let dy = 20;
-  if( currentProblem ) {
-    console.log(currentProblem )
+  let inputString = "Use the following keys to change functionality. Note that using the large data will take additional time.\n\n" +
+  Object.values(problems).reduce( (str, problem) => str += `${problem.display.key} - ${problem.display.name}\n`, "") + 
+  `l - ${useLargeDataSets ? "Don't" : ""} Use Large Data Sets`
+
+  if( results ) {
+    inputString += "\n" + results
   }
+  
+  text( inputString, 20, 20, width/2, height )
+
   //   navigator.clipboard.writeText(currentProblem.solution)
   //   .then( () => text( "solution copied to clipboard", 200, 10 ) )
   //   .catch( (e) => {
@@ -50,23 +38,33 @@ function draw() {
 
 }
 
-const postLoadFASTA = (lines) => {
-  console.log( "hello")
-  let fastaStrings = [];
-  let current;
-  for( const line of lines ) {
-    if( line.at(0) === ">" ) {
-      if( current ) {
-        fastaStrings.push( new DNAString(current.string) ) 
-      } 
-      current = {
-        name: line.substring(1),
-        string: ""
-      }
-    } else {
-      current.string += line;
+
+
+function keyPressed() {
+  if( key === "l" ) {
+    useLargeDataSets = !useLargeDataSets
+    redraw()
+  } else {
+    const problem = Object.values(problems).filter( p => p.display.key === key )[0]
+    if( problem ) {
+      this[`load${problem.display.abbreviation}Data`]()
+        .then( (data) => this[`solve${problem.display.abbreviation}`](data) )
+        .then( (data) => {
+          results = data.msg
+          navigator.clipboard.writeText(data.output)
+          .then( () => results += "\nsolution copied to clipboard" )
+          .catch( (e) => {
+            fill('red');
+            results = `\n${e}. Solution printed to console, if there is one.`
+            console.log( data.output );
+          })
+        })
+        .catch( e => console.log(e))//results = e.msg )
+        .finally(() => {
+          redraw
+        }) 
     }
   }
-  fastaStrings.push( new DNAString(current.string) )
-  currentProblem.data = fastaStrings
 }
+
+
