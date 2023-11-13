@@ -14,6 +14,22 @@ function setup() {
   background(255);
   textWrap(WORD);
   noLoop();
+
+  let d = new DNAString("AGCTTTTCATTCTGACTGCAACGGGCAATATGTCTCTGTGTGGATTAAAAAAAGAGTGTCTGATAGCAGC")
+  console.log( `${d.characterCounts["A"]} ${d.characterCounts["C"]} ${d.characterCounts["G"]} ${d.characterCounts["T"]}` )
+
+  d = new DNAString("GATGGAACTTGACTACGTAAATT")
+  console.log( d.transcribeToRNA().string )
+  
+  d = new DNAString("AAAACCCGGT")
+  console.log( d.reverseComplement().string )
+
+  let r = new RNAString("AUGGCCAUGGCGCCCAGAACUGAGAUCAAUAGUACCCGUAUUAACGGGUGA")
+  console.log( r.toProtein().string )
+
+  d = new DNAString("GATATATGCATATACTT")
+  let f = new DNAString("ATAT")
+  console.log( d.substringLocations(f,true).join(" ") )
 }
 
 function draw() {
