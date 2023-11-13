@@ -23,18 +23,10 @@ function draw() {
   `l - ${useLargeDataSets ? "Don't" : ""} Use Large Data Sets`
 
   if( results ) {
-    inputString += "\n" + results
+    inputString += "\n\n" + results
   }
   
   text( inputString, 20, 20, width/2, height )
-
-  //   navigator.clipboard.writeText(currentProblem.solution)
-  //   .then( () => text( "solution copied to clipboard", 200, 10 ) )
-  //   .catch( (e) => {
-  //     fill('red');
-  //     text( `${e}. Solution printed to console, if there is one.`, 200, 10, width-220) ;
-  //     console.log( currentProblem.solution );
-  //   })
 
 }
 
@@ -48,23 +40,23 @@ function keyPressed() {
     const problem = Object.values(problems).filter( p => p.display.key === key )[0]
     if( problem ) {
       this[`load${problem.display.abbreviation}Data`]()
-        .then( (data) => this[`solve${problem.display.abbreviation}`](data) )
-        .then( (data) => {
-          results = data.msg
-          navigator.clipboard.writeText(data.output)
-          .then( () => results += "\nsolution copied to clipboard" )
-          .catch( (e) => {
-            fill('red');
-            results = `\n${e}. Solution printed to console, if there is one.`
-            console.log( data.output );
-          })
-        })
-        .catch( e => console.log(e))//results = e.msg )
-        .finally(() => {
-          redraw
-        }) 
+        .then( (data) => this[`solve${problem.display.abbreviation}`](data))
+        .then( 
+          (data) => {
+            results = data.msg
+            navigator.clipboard.writeText(data.output)
+            .then( () => results += "\nsolution copied to clipboard" )
+            .catch( (e) => rejected( e, "Solution printed to console, if there is one." ) )
+          },
+          )
+        .catch(rejected)
+        .finally(redraw) 
     }
   }
 }
 
-
+function rejected(e, additionalContext = "") {
+  fill('red')
+  results = e.msg + additionalContext
+  // console.log(e)
+}

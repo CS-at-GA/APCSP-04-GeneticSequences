@@ -131,7 +131,7 @@ function loadORFData() {
 }
 
 function solveLCSM(input) {
-  new Promise((resolve, reject) => {
+  return new Promise((resolve, reject) => {
     const expected = problems.lcsm[useLargeDataSets ? "rosalind" : "test"].expected
     const str = GSUtil.longestCommonSubstring(input.strings)
     if (str === expected) {
@@ -143,7 +143,7 @@ function solveLCSM(input) {
 }
 
 function solveSPLC(input) {
-  new Promise((resolve, reject) => {
+  return new Promise((resolve, reject) => {
     const dna = new DNAString(input.string)
     const output = dna.removeIntrons(input.introns).transcribeToRNA().toProtein()
     const expected = new ProteinString(problems.splc[useLargeDataSets ? "rosalind" : "test"].expected)
@@ -156,7 +156,7 @@ function solveSPLC(input) {
 }
 
 function solveORF(input) {
-  new Promise((resolve, reject) => {
+  return new Promise((resolve, reject) => {
     const output = (new DNAString(input.string))
       .candidateProtenStrings()
       .map(p => p.string)
